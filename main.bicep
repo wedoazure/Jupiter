@@ -46,6 +46,22 @@ module monMDL 'Modules/mon.bicep' = {
   }
 }
 
+//deploy vault resources
+module kvMDL 'Modules/vault.bicep' = {
+  name: 'kv-deploy'
+  params: {
+    location: locationFile
+    date: dateNow
+    email: emailFile
+    appName: appNameFile
+    product: productFile
+    env: envFile
+    client: clientFile
+    service: serviceFile
+    locShort: locshortStr
+  }
+}
+
 //deploy ASP resources
 module aspMDL 'Modules/app.bicep' = {
   name: 'app-deploy'
@@ -60,8 +76,8 @@ module aspMDL 'Modules/app.bicep' = {
     service: serviceFile
     locShort: locshortStr
     snet: netMDL.outputs.snet
-    //aiKey: monMDL.outputs.appiKey
     aiProp: monMDL.outputs.appiProp
+    kvRes: kvMDL.outputs.kvRes
   }
 }
 

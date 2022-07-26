@@ -10,7 +10,7 @@ param locShort string
 
 
 //working variables
-var kvName = 'kv-${appName}-${env}-${locShort}'
+var kvName = 'kv-${appName}-${env}-${locShort}-${date}'
 var afdID = '205478c0-bd83-4e1b-a9d6-db63a3e1e1c8'
 
 resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
@@ -53,7 +53,6 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
     enabledForDeployment: true
     enabledForDiskEncryption: true
     enabledForTemplateDeployment: true
-    enablePurgeProtection: false
     enableSoftDelete: true
     networkAcls: {
       bypass: 'AzureServices'

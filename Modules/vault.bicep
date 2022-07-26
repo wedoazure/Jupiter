@@ -53,7 +53,7 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
     enabledForDeployment: true
     enabledForDiskEncryption: true
     enabledForTemplateDeployment: true
-    enablePurgeProtection: true
+    enablePurgeProtection: false
     enableSoftDelete: true
     networkAcls: {
       bypass: 'AzureServices'

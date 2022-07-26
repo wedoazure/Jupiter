@@ -7,6 +7,7 @@ param env string
 param client string
 param service string
 param locShort string
+param vnet string
 
 
 //working variables

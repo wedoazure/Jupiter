@@ -44,6 +44,14 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
         name: 'snet-asp'
         properties: {
           addressPrefix: sub1
+          delegations: [
+            {
+              name: 'Microsoft.Web/serverFarms'
+              properties: {
+               serviceName: 'Microsoft.Web/serverFarms'
+              }
+            }
+          ]
        }
       }
       {

@@ -29,6 +29,23 @@ module netMDL 'Modules/net.bicep' = {
     address: addressFile
   }
 }
+
+//deploy monitor resources
+module monMDL 'Modules/mon.bicep' = {
+  name: 'mon-deploy'
+  params: {
+    location: locationFile
+    date: dateNow
+    email: emailFile
+    appName: appNameFile
+    product: productFile
+    env: envFile
+    client: clientFile
+    service: serviceFile
+    locShort: locshortStr
+  }
+}
+
 //deploy ASP resources
 module aspMDL 'Modules/app.bicep' = {
   name: 'app-deploy'
@@ -73,5 +90,6 @@ module afdMDL 'Modules/afd.bicep' = {
     service: serviceFile
     app: aspMDL.outputs.appURL
     waf: wafMDL.outputs.wafID
+    law: monMDL.outputs.workspace
   }
 }

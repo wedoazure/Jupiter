@@ -7,10 +7,11 @@ param client string
 param service string
 param app string
 param waf string
+param law string
 
 //working variables
 var afdName = 'afd-${appName}-${env}'
-
+var endpointName = 'afd-${appName}-${uniqueString(resourceGroup().id)}S'
 
 resource afd 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: afdName
@@ -32,7 +33,7 @@ resource afd 'Microsoft.Cdn/profiles@2021-06-01' = {
 
 resource afd_endpoint 'Microsoft.Cdn/profiles/afdendpoints@2021-06-01' = {
   parent: afd
-  name: 'endpoint'
+  name: endpointName
   location: 'Global'
   properties: {
     enabledState: 'Enabled'
@@ -46,7 +47,6 @@ resource afd_origingroup 'Microsoft.Cdn/profiles/origingroups@2021-06-01' = {
     loadBalancingSettings: {
       sampleSize: 4
       successfulSamplesRequired: 3
-      additionalLatencyInMilliseconds: 50
     }
     healthProbeSettings: {
       probePath: '/'
@@ -69,7 +69,6 @@ resource afd_origin 'Microsoft.Cdn/profiles/origingroups/origins@2021-06-01' = {
     priority: 1
     weight: 1000
     enabledState: 'Enabled'
-    enforceCertificateNameCheck: true
   }
 }
 
@@ -100,7 +99,7 @@ resource afd_security 'Microsoft.Cdn/profiles/securitypolicies@2021-06-01' = {
 
 resource afd_endpoint_routes 'Microsoft.Cdn/profiles/afdendpoints/routes@2021-06-01' = {
   parent: afd_endpoint
-  name: 'routes'
+  name: 'route'
   properties: {
     originGroup: {
       id: afd_origingroup.id
@@ -117,3 +116,31 @@ resource afd_endpoint_routes 'Microsoft.Cdn/profiles/afdendpoints/routes@2021-06
     enabledState: 'Enabled'
   }
 }
+
+resource lawDiags 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: afd
+  name: 'afd-diags'
+  properties: {
+    workspaceId: law
+    logs: [
+      {
+        category: 'FrontDoorWebApplicationFirewallLog'
+        enabled: true
+        retentionPolicy: {
+          days: 30
+          enabled: true
+        }
+      }
+      {
+        category: 'FrontDoorAccessLog'
+        enabled: true
+        retentionPolicy: {
+          days: 30
+          enabled: true
+        }
+      }
+    ]
+  }
+}
+
+output frontDoorEndpointHostName string = afd_endpoint.properties.hostName

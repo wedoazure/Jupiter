@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appNameFile": {
+            "value": "jpta"
+        },
+        "locationFile":{
+            "value": "northeurope"
+        },
+        "emailFile":{
+            "value": "example@vistatec.com"
+        },
+        "productFile":{
+            "value": "Product1"
+        },
+        "envFile":{
+            "value": "stg"
+        },
+        "clientFile":{
+            "value": "Client1"
+        },
+        "serviceFile":{
+            "value": "Compute"
+        }
+
+
+    }
+}

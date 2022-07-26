@@ -76,11 +76,9 @@ resource afd_endpoint_routes 'Microsoft.Cdn/profiles/afdendpoints/routes@2021-06
   parent: afd_endpoint
   name: 'routes'
   properties: {
-    customDomains: []
     originGroup: {
       id: afd_origingroup.id
     }
-    ruleSets: []
     supportedProtocols: [
       'Https'
     ]

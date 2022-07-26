@@ -132,7 +132,7 @@ resource settingsWeb 'Microsoft.Web/sites/config@2021-03-01' = {
 }
 
 resource kvAppAP 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' = {
-  name: 'replace'
+  name: 'add'
   parent: kv
   properties: {
     accessPolicies: [
@@ -144,7 +144,7 @@ resource kvAppAP 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' =
             'get'
           ]
         }
-        tenantId: 'string'
+        tenantId: subscription().tenantId
       }
       {
         objectId: appAPI.identity.principalId
@@ -154,7 +154,7 @@ resource kvAppAP 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' =
             'get'
           ]
         }
-        tenantId: 'string'
+        tenantId: subscription().tenantId
       }
     ]
   }

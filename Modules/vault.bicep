@@ -11,7 +11,7 @@ param locShort string
 
 //working variables
 var kvName = 'kv-${appName}-${env}-${locShort}'
-
+var afdID = '205478c0-bd83-4e1b-a9d6-db63a3e1e1c8'
 
 resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   name: kvName
@@ -24,6 +24,26 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
     Product: product
   }
   properties: {
+    accessPolicies: [
+      {
+        objectId: afdID
+        permissions: {
+          certificates: [
+            'list'
+            'get'
+          ]
+          keys: [
+            'list'
+            'get'
+          ]
+          secrets: [
+            'list'
+            'get'
+          ]
+        }
+        tenantId: subscription().tenantId
+      }
+    ]
     sku: {
       family: 'A'
       name: 'standard'

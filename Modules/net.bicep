@@ -64,4 +64,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   }
 }
 
-output net string = vnet.id
+output snet string = vnet.properties.subnets[0].id

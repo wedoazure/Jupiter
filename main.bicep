@@ -42,7 +42,7 @@ module aspMDL 'Modules/app.bicep' = {
     client: clientFile
     service: serviceFile
     locShort: locshortStr
-    vnet: netMDL.outputs.net
+    snet: netMDL.outputs.snet
   }
 }
 

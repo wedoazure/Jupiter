@@ -7,7 +7,7 @@ param env string
 param client string
 param service string
 param locShort string
-param vnet string
+param snet string
 
 
 //working variables
@@ -51,6 +51,7 @@ resource appWeb 'Microsoft.Web/sites@2021-03-01' = {
   }
   properties: {
     serverFarmId: appSP.id
+    virtualNetworkSubnetId: snet
     enabled: true
     httpsOnly: true
     siteConfig: {
@@ -77,6 +78,7 @@ resource appAPI 'Microsoft.Web/sites@2021-03-01' = {
   }
   properties: {
     serverFarmId: appSP.id
+    virtualNetworkSubnetId: snet
     enabled: true
     httpsOnly: true
     siteConfig: {

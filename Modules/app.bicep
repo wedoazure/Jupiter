@@ -9,7 +9,7 @@ param service string
 param locShort string
 param snet string
 param aiProp object
-param kvRes object
+param kvRes string
 
 //working variables
 var aspName = 'asp-${appName}-${env}-${locShort}'
@@ -20,7 +20,7 @@ var stack = 'dotnet'
 var kvRole = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
 
 resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
-  name: kvRes.Name
+  name: kvRes
 }
 
 resource appSP 'Microsoft.Web/serverfarms@2021-03-01' = {
@@ -132,7 +132,7 @@ resource settingsWeb 'Microsoft.Web/sites/config@2021-03-01' = {
 }
 
 resource kvWebRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(kvRes.name, appAPI.name, kvRole)
+  name: guid(kvRes, appAPI.name, kvRole)
   scope: kv
   properties: {
     principalId: appWeb.identity.principalId
@@ -142,7 +142,7 @@ resource kvWebRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' 
 }
 
 resource kvApiRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(kvRes.name, appAPI.name, kvRole)
+  name: guid(kvRes, appAPI.name, kvRole)
   scope: kv
   properties: {
     principalId: appAPI.identity.principalId

@@ -36,4 +36,4 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   }
 }
 
-output kvRes object = kv
+output kvRes string = kv.name

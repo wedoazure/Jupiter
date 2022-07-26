@@ -17,7 +17,7 @@ var sku = 'S1'
 var webName = 'app-${appName}-${env}-${locShort}'
 var apiName = 'api-${appName}-${env}-${locShort}'
 var stack = 'dotnet'
-var kvRole = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
+//var kvRole = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
 
 resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' existing = {
   name: kvRes
@@ -131,23 +131,32 @@ resource settingsWeb 'Microsoft.Web/sites/config@2021-03-01' = {
   }
 }
 
-resource kvWebRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(kvRes, appWeb.name, kvRole)
-  scope: kv
+resource kvAppAP 'Microsoft.KeyVault/vaults/accessPolicies@2021-11-01-preview' = {
+  name: 'replace'
+  parent: kv
   properties: {
-    principalId: appWeb.identity.principalId
-    principalType: 'ServicePrincipal'
-    roleDefinitionId: kvRole
-  }
-}
-
-resource kvApiRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
-  name: guid(kvRes, appAPI.name, kvRole)
-  scope: kv
-  properties: {
-    principalId: appAPI.identity.principalId
-    principalType: 'ServicePrincipal'
-    roleDefinitionId: kvRole
+    accessPolicies: [
+      {
+        objectId: appWeb.identity.principalId
+        permissions: {
+          secrets: [
+            'list'
+            'get'
+          ]
+        }
+        tenantId: 'string'
+      }
+      {
+        objectId: appAPI.identity.principalId
+        permissions: {
+          secrets: [
+            'list'
+            'get'
+          ]
+        }
+        tenantId: 'string'
+      }
+    ]
   }
 }
 

@@ -29,10 +29,15 @@ resource kv 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
       name: 'standard'
     }
     tenantId: subscription().tenantId
-    enableRbacAuthorization: true
+    enableRbacAuthorization: false
     enabledForDeployment: true
     enabledForDiskEncryption: true
     enabledForTemplateDeployment: true
+    enablePurgeProtection: true
+    enableSoftDelete: true
+    networkAcls: {
+      bypass: 'AzureServices'
+    }
   }
 }
 

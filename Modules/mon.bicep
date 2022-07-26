@@ -48,6 +48,4 @@ resource appI 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 output workspace string = law.id
-//output appiKey string = appI.properties.InstrumentationKey
-//output appiString string = appI.properties.ConnectionString
 output appiProp object = appI.properties

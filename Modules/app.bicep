@@ -131,7 +131,7 @@ resource settingsWeb 'Microsoft.Web/sites/config@2021-03-01' = {
   }
 }
 
-resource kvWebRole 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource kvWebRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   name: guid(kvRes.name, appAPI.name, kvRole)
   scope: kv
   properties: {
@@ -141,7 +141,7 @@ resource kvWebRole 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' 
   }
 }
 
-resource kvApiRole 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource kvApiRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   name: guid(kvRes.name, appAPI.name, kvRole)
   scope: kv
   properties: {

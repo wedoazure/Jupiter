@@ -102,3 +102,5 @@ resource stackWeb 'Microsoft.Web/sites/config@2021-03-01' = {
     CURRENT_STACK: stack
   }
 }
+
+output appURL string = appWeb.properties.defaultHostName

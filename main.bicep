@@ -27,7 +27,21 @@ module aspMDL 'Modules/app.bicep' = {
   }
 }
 
-//deploy ASP resources
+//deploy WAF resources
+module wafMDL 'Modules/waf.bicep' = {
+  name: 'waf-deploy'
+  params: {
+    date: dateNow
+    email: emailFile
+    appName: appNameFile
+    product: productFile
+    env: envFile
+    client: clientFile
+    service: serviceFile
+  }
+}
+
+//deploy AFD resources
 module afdMDL 'Modules/afd.bicep' = {
   name: 'afd-deploy'
   params: {

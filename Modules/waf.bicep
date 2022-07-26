@@ -7,7 +7,7 @@ param client string
 param service string
 
 //working variables
-var wafName = 'waf-afd-${appName}-${env}'
+var wafName = 'wafafd${appName}${env}'
 
 
 

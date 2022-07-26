@@ -25,13 +25,26 @@ resource afdWAF 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-
     name: 'Premium_AzureFrontDoor'
   }
    properties: {
-     
-     
      policySettings: {
+        enabledState: 'Enabled'
         mode: 'Prevention'
         customBlockResponseStatusCode: 406
-        customBlockResponseBody: base64('<html><head><title>You are blocked</title></head><body bgcolor="#FFB299"><p><h1>WAF custom response</h1>You are being blocked. If you need access, contact support with this reference{{azure-ref}}</p></body></html>')
-     }
+        customBlockResponseBody: base64('<html><head><title>You are blocked</title></head><body bgcolor="#FFB299"><p><h1>AFD WAF custom response</h1>You are being blocked. If you need access, contact support.</p></body></html>')
+        requestBodyCheck: 'Enabled'
+      }
+      managedRules: {
+        managedRuleSets: [
+          {
+            ruleSetType: 'Microsoft_DefaultRuleSet'
+            ruleSetVersion: '2.0'
+            ruleSetAction: 'Block'
+          }
+          {
+            ruleSetType: 'Microsoft_BotManagerRuleSet'
+            ruleSetVersion: '1.0' 
+          }
+        ]
+      }
      
    }
 }

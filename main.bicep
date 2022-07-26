@@ -7,10 +7,28 @@ param envFile string
 param clientFile string
 param serviceFile string
 param locshortbool bool = locationFile =~ 'northeurope'
+param addressFile string
 
 
 var locshortStr = locshortbool ? 'ne' : 'we'
 
+
+//deploy network resources
+module netMDL 'Modules/net.bicep' = {
+  name: 'net-deploy'
+  params: {
+    location: locationFile
+    date: dateNow
+    email: emailFile
+    appName: appNameFile
+    product: productFile
+    env: envFile
+    client: clientFile
+    service: serviceFile
+    locShort: locshortStr
+    address: addressFile
+  }
+}
 //deploy ASP resources
 module aspMDL 'Modules/app.bicep' = {
   name: 'app-deploy'

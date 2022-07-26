@@ -11,6 +11,7 @@ param locShort string
 
 //working variables
 var lawName = 'law-${appName}-${env}-${locShort}'
+var appiName = 'ai-${appName}-${env}-${locShort}'
 
 resource law 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   name: lawName
@@ -29,4 +30,22 @@ resource law 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   }
 }
 
+resource appI 'Microsoft.Insights/components@2020-02-02' = {
+  name: appiName
+  location: location
+  kind: 'web'
+  tags: {
+    Client: client
+    Service: service
+    Built: date
+    Owner: email
+    Product: product
+  }
+  properties: {
+    Application_Type: 'web'
+    WorkspaceResourceId: law.id
+  }
+}
+
 output workspace string = law.id
+output appiKey string = appI.properties.InstrumentationKey

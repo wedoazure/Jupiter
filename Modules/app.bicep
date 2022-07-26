@@ -8,6 +8,7 @@ param client string
 param service string
 param locShort string
 param snet string
+param aiKey string
 
 
 //working variables
@@ -106,4 +107,19 @@ resource stackWeb 'Microsoft.Web/sites/config@2021-03-01' = {
   }
 }
 
+resource settingsAPI 'Microsoft.Web/sites/config@2021-03-01' = {
+  name: 'appsettings'
+  parent: appAPI
+  properties: {
+    APPINSIGHTS_INSTRUMENTATIONKEY: aiKey
+  }
+}
+
+resource settingsWeb 'Microsoft.Web/sites/config@2021-03-01' = {
+  name: 'appsettings'
+  parent: appWeb
+  properties: {
+    APPINSIGHTS_INSTRUMENTATIONKEY: aiKey
+  }
+}
 output appURL string = appWeb.properties.defaultHostName

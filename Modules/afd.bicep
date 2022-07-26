@@ -11,7 +11,7 @@ param law string
 
 //working variables
 var afdName = 'afd-${appName}-${env}'
-var endpointName = 'afd-${appName}-${uniqueString(resourceGroup().id)}S'
+var endpointName = 'afd-${appName}-'
 
 resource afd 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: afdName

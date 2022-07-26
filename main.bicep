@@ -60,6 +60,7 @@ module aspMDL 'Modules/app.bicep' = {
     service: serviceFile
     locShort: locshortStr
     snet: netMDL.outputs.snet
+    aiKey: monMDL.outputs.appiKey
   }
 }
 

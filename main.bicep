@@ -53,5 +53,6 @@ module afdMDL 'Modules/afd.bicep' = {
     client: clientFile
     service: serviceFile
     app: aspMDL.outputs.appURL
+    waf: wafMDL.outputs.wafID
   }
 }

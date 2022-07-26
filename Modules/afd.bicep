@@ -6,6 +6,7 @@ param env string
 param client string
 param service string
 param app string
+param waf string
 
 //working variables
 var afdName = 'afd-${appName}-${env}'
@@ -69,6 +70,31 @@ resource afd_origin 'Microsoft.Cdn/profiles/origingroups/origins@2021-06-01' = {
     weight: 1000
     enabledState: 'Enabled'
     enforceCertificateNameCheck: true
+  }
+}
+
+resource afd_security 'Microsoft.Cdn/profiles/securitypolicies@2021-06-01' = {
+  parent: afd
+  name: 'security'
+  properties: {
+    parameters: {
+      wafPolicy: {
+        id: waf
+      }
+      associations: [
+        {
+          domains: [
+            {
+              id: afd_endpoint.id
+            }
+          ]
+          patternsToMatch: [
+            '/*'
+          ]
+        }
+      ]
+      type: 'WebApplicationFirewall'
+    }
   }
 }
 

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "appNameFile": {
-            "value": "jpta"
+            "value": "jpt"
         },
         "locationFile":{
             "value": "northeurope"
@@ -15,7 +15,7 @@
             "value": "Product1"
         },
         "envFile":{
-            "value": "tst"
+            "value": "stg"
         },
         "clientFile":{
             "value": "Client1"

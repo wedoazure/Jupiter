@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "appNameFile": {
-            "value": "jpt"
+            "value": "jptr"
         },
         "locationFile":{
             "value": "northeurope"
